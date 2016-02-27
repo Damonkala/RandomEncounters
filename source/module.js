@@ -1,9 +1,12 @@
 'use strict';
 
-var app = angular.module('scaffoldApp', ['ui.router'])
+var app = angular.module('randomEncounter', ['ui.router', 'angular-jwt', 'ngCookies'])
 
+app.constant('ENV', {
+  API_URL: 'http://localhost:3000'
+});
 
-.config(function($stateProvider, $urlRouterProvider, $locationProvider){
+app.config(function($stateProvider, $urlRouterProvider, $locationProvider){
 	$locationProvider.html5Mode(true);
 	$urlRouterProvider.otherwise('/');
 	$stateProvider

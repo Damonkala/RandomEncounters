@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('scaffoldApp')
+angular.module('randomEncounter')
 .controller('homeCtrl', function($scope){
 
 
