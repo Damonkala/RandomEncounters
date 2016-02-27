@@ -7,8 +7,9 @@
   <link href="css/style.css" rel="stylesheet">
   <link rel="stylesheet" href="assets/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="https://js.arcgis.com/3.15/esri/css/esri.css">
 </head>
-<body ng-app="randomEncounter">
+<body ng-app="randomEncounter" ng-controller="MasterController">
   <!-- <h1>Random Encounter Club</h1> -->
   <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -24,14 +25,18 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
           <li><a ui-sref="home">Home</a></li>
-          <li><a ui-sref="login">Login</a></li>
-          <li><a ui-sref="register">Register</a></li>
+          <!-- <ul class="nav navbar-nav" ng-if="!loggedIn"> -->
+            <li><a ui-sref="login">Login</a></li>
+            <li><a ui-sref="register">Register</a></li>
+          <!-- </ul> -->
+          <li><a ui-sref="map">Map</a></li>
+          <li><a ng-click="logout">Logout</a></li>
         </ul>
       </div>
     </div>
   </nav>
   <div ui-view></div>
-
+  <script src="https://js.arcgis.com/3.15/"></script>
   <script src="assets/angular/angular.min.js"></script>
   <script src="assets/angular-ui-router/release/angular-ui-router.min.js"></script>
   <script src="assets/angular-cookies/angular-cookies.min.js"></script>
