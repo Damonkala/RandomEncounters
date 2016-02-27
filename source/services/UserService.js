@@ -18,4 +18,7 @@ app.service('UserService', function($http, ENV, $location, $rootScope, $cookies,
 	this.addInterestToSchema = function(interest, userId){
 		return $http.put(`${ENV.API_URL}/user/addInterest/${interest}/${userId}`)
 	}
+	this.alertUser = function(userOneUsername, userTwoId){
+		return $http.put(`${ENV.API_URL}/user/alertUser/${userOneUsername}/${userTwoId}`)
+	}
 })

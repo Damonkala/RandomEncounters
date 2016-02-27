@@ -37,7 +37,11 @@ router.get('/find/:city/:interest', function(req, res){
     res.status(err ? 400 : 200).send(err || users)
   })
 })
-
+router.put('/alertUser/:sender/:receiver', function(req,res){
+  User.findByIdAndUpdate(req.params.receiver, {$push: {alerts : req.params.sender}}, function(err, user){
+    res.status(err ? 400 : 200).send(err || user)
+  })
+})
 router.put('/addInterest/:interest/:userId', function(req, res){
   User.findByIdAndUpdate(req.params.userId, {$push: {interests : req.params.interest}}, function(err, user){
     if(err){

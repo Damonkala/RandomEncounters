@@ -8,6 +8,12 @@
 			Find a fan of {{interest}}
 		</button>
 	</div>
+	<div ng-if="userInfo.alerts.length">
+		You got alerted by:
+		<div  ng-repeat="alert in userInfo.alerts track by $index">
+			{{alert}}
+		</div>
+	</div>
 	<div ng-if="newPal">
 		Your new pal is {{newPal.username}}!
 		<button ng-click="findFriendIn(userInfo.location, userInfo.username)">Find a new pal</button>

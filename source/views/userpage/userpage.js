@@ -28,13 +28,19 @@ angular.module('randomEncounter')
 		var yourName = username;
 		UserService.findByCityAndInterest(location, interest)
 		.then(function(res){
+			console.log("HOW ABOUT NOW!?", res.data);
 			for(var userIndex in res.data){
 				if(res.data[userIndex].username == yourName){
 					res.data.splice(userIndex, 1);
 				}
 				var possiblePals = res.data
+				console.log("And now?!", possiblePals);
 			}
 			$scope.newPal = possiblePals[Math.floor(Math.random()*possiblePals.length)];
+			UserService.alertUser($scope.userInfo.username, $scope.newPal._id)
+			.then(function(res){
+				console.log(res);
+			})
 		})
 	}
 	$scope.submitInterest = function(interest, userId){
