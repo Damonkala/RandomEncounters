@@ -12,4 +12,7 @@ app.service('UserService', function($http, ENV, $location, $rootScope, $cookies,
 	this.findByCity = function(city){
 		return $http.get(`${ENV.API_URL}/user/find/${city}`)
 	}
+	this.findByCityAndInterest = function(city, interest){
+		return $http.get(`${ENV.API_URL}/user/find/${city}/${interest}`)
+	}
 })

@@ -20,9 +20,20 @@ angular.module('randomEncounter')
 				}
 				var possiblePals = res.data
 			}
-			console.log(possiblePals);
-			var newPal = possiblePals[Math.floor(Math.random()*possiblePals.length)];
-			console.log(newPal.username);
+			$scope.newPal = possiblePals[Math.floor(Math.random()*possiblePals.length)];
+		})
+	}
+	$scope.findByCityAndInterest = function(location, interest, username){
+		var yourName = username;
+		UserService.findByCityAndInterest(location, interest)
+		.then(function(res){
+			for(var userIndex in res.data){
+				if(res.data[userIndex].username == yourName){
+					res.data.splice(userIndex, 1);
+				}
+				var possiblePals = res.data
+			}
+			$scope.newPal = possiblePals[Math.floor(Math.random()*possiblePals.length)];
 		})
 	}
 })

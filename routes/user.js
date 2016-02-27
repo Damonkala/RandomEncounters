@@ -26,7 +26,14 @@ router.post('/register', function(req, res){
 
 router.get('/find/:city', function(req, res){
   User.find({'location' : req.params.city}, function(err, users) {
-    console.log(users);
+    res.status(err ? 400 : 200).send(err || users)
+  })
+})
+
+router.get('/find/:city/:interest', function(req, res){
+  console.log("CITY AND INTEREST", req.params.city, req.params.interest);
+  User.find({ $and: [ { location: req.params.city }, { interests: req.params.interest } ] }, function(err, users) {
+    console.log("Hey guys!", users);
     res.status(err ? 400 : 200).send(err || users)
   })
 })
