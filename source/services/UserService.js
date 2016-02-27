@@ -9,4 +9,7 @@ app.service('UserService', function($http, ENV, $location, $rootScope, $cookies,
 	this.register = function(user){
 		return $http.post(`${ENV.API_URL}/user/register`, user);
 	};
+	this.findByCity = function(city){
+		return $http.get(`${ENV.API_URL}/user/find/${city}`)
+	}
 })

@@ -13,7 +13,7 @@ angular.module('randomEncounter')
 				var token = $cookies.get('token');
 				var decoded = jwtHelper.decodeToken(token);
 				$scope.loggedIn = true;
-				$state.go('home')
+				$state.go('userpage')
 			}
 		}, function(err) {
 			console.error(err);

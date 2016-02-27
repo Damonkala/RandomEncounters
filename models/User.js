@@ -12,6 +12,8 @@ var userSchema = Schema({
 	username: { type: String, required: true, unique: true},
 	name: {type: String, required: true},
 	password: { type: String, required: true },
+	location: { type: String},
+	interests: { type: Array}
 });
 
 
@@ -19,6 +21,7 @@ userSchema.statics.register = function(user, cb){
 	var username = user.username;
 	var email = user.email;
 	var name = user.name;
+	var city = user.city;
 	bcrypt.genSalt(10, function(err, salt) {
 		bcrypt.hash(user.password, salt, function(err, password) {
 			User.find({$or: [{username: username}, {email: email}] }, function(err, user){
@@ -27,6 +30,7 @@ userSchema.statics.register = function(user, cb){
 				newUser.username = username;
 				newUser.email = email;
 				newUser.name = name;
+				newUser.location = city;
 				newUser.password = password;
 				newUser.save(function(err, savedUser){
 					savedUser.password = null;

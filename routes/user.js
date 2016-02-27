@@ -24,4 +24,10 @@ router.post('/register', function(req, res){
   })
 })
 
+router.get('/find/:city', function(req, res){
+  User.find({'location' : req.params.city}, function(err, users) {
+    console.log(users);
+    res.status(err ? 400 : 200).send(err || users)
+  })
+})
 module.exports = router;
