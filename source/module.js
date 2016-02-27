@@ -17,10 +17,7 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider){
   .state('map', {url: '/map', templateUrl: 'views/map/map.html', controller: 'mapCtrl'})
 })
 app.controller('MasterController', function(UserService, $cookies, jwtHelper, $scope, $state, $rootScope){
-  var cookies = $cookies.get('token');
-  if(cookies){
-    $scope.loggedIn = true;
-  }
+  $rootScope.authentication = UserService.isLoggedIn();
   $scope.logout = function(){
     $scope.isLoggedIn = false;
     $cookies.remove('token');

@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('randomEncounter')
-.controller('mapCtrl', function($scope, UserService, $state){
-
+.controller('mapCtrl', function($scope, UserService, $state, $cookies, jwtHelper, $rootScope){
+	$rootScope.authentication = UserService.isLoggedIn();
 	var map;
 	require(["esri/map", "dojo/domReady!"], function(Map) {
 	  map = new Map("mapDiv", {

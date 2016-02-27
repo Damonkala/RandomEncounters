@@ -1,16 +1,8 @@
 'use strict';
 
 angular.module('randomEncounter')
-.controller('userpageCtrl', function($scope, $cookies, jwtHelper, $state, UserService){
-	var cookies = $cookies.get('token');
-	if(cookies){
-		$scope.userInfo = (jwtHelper.decodeToken(cookies))
-		console.log($scope.userInfo);
-		$scope.loggedIn = true;
-	} else {
-		$scope.loggedIn = false;
-		$state.go('home')
-	}
+.controller('userpageCtrl', function($scope, $cookies, jwtHelper, $state, UserService, $rootScope){
+	$rootScope.authentication = UserService.isLoggedIn();
 	$scope.findFriendIn = function(location, username){
 		var yourName = username;
 		UserService.findByCity(location, username)

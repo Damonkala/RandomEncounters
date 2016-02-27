@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('randomEncounter')
-.controller('registerCtrl', function($scope, UserService, $state){
+.controller('registerCtrl', function($scope, UserService, $state, $cookies, jwtHelper, $rootScope){
+	$rootScope.authentication = UserService.isLoggedIn();
 	$scope.submit = function(user){
 		if(user.password !== user.password2){
 			alert("The passwords don't match!")

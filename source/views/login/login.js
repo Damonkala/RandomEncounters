@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('randomEncounter')
-.controller('loginCtrl', function($scope, UserService, $cookies, jwtHelper, $state){
+.controller('loginCtrl', function($scope, UserService, $cookies, jwtHelper, $state, $rootScope){
+	$rootScope.authentication = UserService.isLoggedIn();
 	$scope.submit = function(user){
 		UserService.login(user)
 		.then(function(res){
@@ -12,6 +13,8 @@ angular.module('randomEncounter')
 				document.cookie = 'token' + "=" + res.data;
 				var token = $cookies.get('token');
 				var decoded = jwtHelper.decodeToken(token);
+				$scope.userInfo = (jwtHelper.decodeToken(token))
+				console.log($scope.userInfo);
 				$scope.loggedIn = true;
 				$state.go('userpage')
 			}
