@@ -21,9 +21,14 @@ app.service('UserService', function($http, ENV, $location, $rootScope, $cookies,
 	this.alertUser = function(userOneUsername, userTwoId){
 		return $http.put(`${ENV.API_URL}/user/alertUser/${userOneUsername}/${userTwoId}`)
 	}
-	this.isLoggedIn = function(){
+	this.isLoggedIn = function(cookies){
 		var authentication = {};
-		if($cookies.get('token')){
+		if(cookies){
+			authentication.userInfo = (jwtHelper.decodeToken($cookies.get('token')));
+			authentication.isAuthed = true;
+			return authentication;
+		}
+		else if($cookies.get('token')){
 			authentication.userInfo = (jwtHelper.decodeToken($cookies.get('token')));
 			authentication.isAuthed = true;
 			return authentication;

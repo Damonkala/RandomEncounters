@@ -3,8 +3,8 @@
 var app = angular.module('randomEncounter', ['ui.router', 'angular-jwt', 'ngCookies'])
 
 app.constant('ENV', {
-  API_URL: 'https://powerful-lake-77730.herokuapp.com/'
-  // API_URL: 'http://localhost:3000'
+  // API_URL: 'https://powerful-lake-77730.herokuapp.com/'
+  API_URL: 'http://localhost:3000'
 });
 
 app.config(function($stateProvider, $urlRouterProvider, $locationProvider){

@@ -13,7 +13,7 @@ var userSchema = Schema({
 	name: {type: String, required: true},
 	password: { type: String, required: true },
 	location: { type: String},
-	interests: { type: Array},
+	interests: [{type: Schema.Types.ObjectId, ref: "Interest"}],
 	alerts: { type: Array}
 });
 

@@ -4,6 +4,7 @@ var express = require('express')
 var router = express.Router();
 
 var User = require('../models/User');
+var Interest = require('../models/Interest');
 
 var jwt = require('jwt-simple');
 
@@ -43,24 +44,28 @@ router.put('/alertUser/:sender/:receiver', function(req,res){
   })
 })
 router.put('/addInterest/:interest/:userId', function(req, res){
-  // User.find({$and: [{_id: req.params.id}, {interests: req.params.interest}] }, function(err, user){
-  //   if(user){
-  //     return
-  //   }
-  User.findById(req.params.userId, function(err, updatedUser){
-    if(err){
-      res.status(400).send(err);
+  Interest.findOne({name: req.params.interest}, function(err, interest){
+    if(!interest){
+      console.log("If no interest is present");
+      Interest.create({name: req.params.interest, users : req.params.userId}, function(err, interest){
+        User.findByIdAndUpdate(req.params.userId, {$push: {interests : interest._id}}, function(err, user){
+          res.send(user);
+        })
+      })
+    } else {
+      console.log("If an interest is present213123123123");
+      if(interest.users.indexOf(req.params.userId) == -1){
+        console.log("If the interest does not have the user it will be added now");
+        interest.users.push(req.params.userId)
+        interest.save(function(err, savedInterest){
+          User.findByIdAndUpdate(req.params.userId, {$push: {interests : savedInterest._id}}, function(err, user){
+            res.send(user);
+          })
+        })
+      }
     }
-  User.findByIdAndUpdate(req.params.userId, {$push: {interests : req.params.interest}}, function(err, user){
-    if(err){
-      res.status(400).send(err);
-    }
-      updatedUser.password = null
-      var newToken = jwt.encode(updatedUser, process.env.JWT_SECRET)
-      res.cookie("token", newToken)
-      res.send(newToken)
-    })
   })
 })
 
 module.exports = router;
+// {$push: {users : req.params.userId}}

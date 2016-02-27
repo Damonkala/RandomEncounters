@@ -3,6 +3,9 @@
 angular.module('randomEncounter')
 .controller('userpageCtrl', function($scope, $cookies, jwtHelper, $state, UserService, $rootScope){
 	$rootScope.authentication = UserService.isLoggedIn();
+	if(!$rootScope.authentication.isAuthed){
+		$state.go('login')
+	}
 	$scope.findFriendIn = function(location, username){
 		var yourName = username;
 		UserService.findByCity(location, username)
@@ -29,21 +32,19 @@ angular.module('randomEncounter')
 				console.log("And now?!", possiblePals);
 			}
 			$scope.newPal = possiblePals[Math.floor(Math.random()*possiblePals.length)];
-			UserService.alertUser($scope.userInfo.username, $scope.newPal._id)
+			UserService.alertUser($rootScope.authentication.userInfo.username, $scope.newPal._id)
 			.then(function(res){
 				console.log(res);
 			})
 		})
 	}
 	$scope.submitInterest = function(interest, userId){
-		$scope.interestInput = '';
 		if(!interest){
 			alert("You need to type up an interest first!")
 		} else {
 			UserService.addInterestToSchema(interest, userId)
 			.then(function(res){
-				console.log(res);
-				$scope.userInfo = (jwtHelper.decodeToken(res.data))
+				$rootScope.authentication = UserService.isLoggedIn(res.data);
 			})
 		}
 	}
