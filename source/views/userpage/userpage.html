@@ -2,7 +2,7 @@
 <div ng-if="authentication.isAuthed">
 	<button ng-if="!newPal" ng-click="findFriendIn(userInfo.location, userInfo.username)">Find a new friend in {{userInfo.location}}</button>
 	<input type="text" ng-model="interestInput" placeholder="interest">
-	<button ng-click="submitInterest(interestInput, userInfo._id)">Add a new interest</button>
+	<button ng-click="submitInterest(interestInput, authentication.userInfo._id)">Add a new interest</button>
 	<div ng-repeat="interest in userInfo.interests track by $index">
 		<button ng-click="findByCityAndInterest(userInfo.location, interestInput,  userInfo.username)">
 			Find a fan of {{interest}}
