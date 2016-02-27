@@ -43,14 +43,18 @@ router.put('/alertUser/:sender/:receiver', function(req,res){
   })
 })
 router.put('/addInterest/:interest/:userId', function(req, res){
+  // User.find({$and: [{_id: req.params.id}, {interests: req.params.interest}] }, function(err, user){
+  //   if(user){
+  //     return
+  //   }
+  User.findById(req.params.userId, function(err, updatedUser){
+    if(err){
+      res.status(400).send(err);
+    }
   User.findByIdAndUpdate(req.params.userId, {$push: {interests : req.params.interest}}, function(err, user){
     if(err){
       res.status(400).send(err);
     }
-    User.findById(req.params.userId, function(err, updatedUser){
-      if(err){
-        res.status(400).send(err);
-      }
       updatedUser.password = null
       var newToken = jwt.encode(updatedUser, process.env.JWT_SECRET)
       res.cookie("token", newToken)
