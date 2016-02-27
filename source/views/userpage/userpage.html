@@ -1,10 +1,10 @@
 <h1>Welcome Home</h1>
 <div ng-if="loggedIn">
 	<button ng-if="!newPal" ng-click="findFriendIn(userInfo.location, userInfo.username)">Find a new friend in {{userInfo.location}}</button>
-	<input type="text" ng-model="interest" placeholder="interest">
-	<button ng-click="submitInterest(interest)">Add a new interest</button>
-	<div ng-repeat="interest in userInfo.interests">
-		<button ng-click="findByCityAndInterest(userInfo.location, interest,  userInfo.username)">
+	<input type="text" ng-model="interestInput" placeholder="interest">
+	<button ng-click="submitInterest(interestInput, userInfo._id)">Add a new interest</button>
+	<div ng-repeat="interest in userInfo.interests track by $index">
+		<button ng-click="findByCityAndInterest(userInfo.location, interestInput,  userInfo.username)">
 			Find a fan of {{interest}}
 		</button>
 	</div>

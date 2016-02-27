@@ -15,4 +15,7 @@ app.service('UserService', function($http, ENV, $location, $rootScope, $cookies,
 	this.findByCityAndInterest = function(city, interest){
 		return $http.get(`${ENV.API_URL}/user/find/${city}/${interest}`)
 	}
+	this.addInterestToSchema = function(interest, userId){
+		return $http.put(`${ENV.API_URL}/user/addInterest/${interest}/${userId}`)
+	}
 })

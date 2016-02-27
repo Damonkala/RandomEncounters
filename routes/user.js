@@ -37,4 +37,22 @@ router.get('/find/:city/:interest', function(req, res){
     res.status(err ? 400 : 200).send(err || users)
   })
 })
+
+router.put('/addInterest/:interest/:userId', function(req, res){
+  User.findByIdAndUpdate(req.params.userId, {$push: {interests : req.params.interest}}, function(err, user){
+    if(err){
+      res.status(400).send(err);
+    }
+    User.findById(req.params.userId, function(err, updatedUser){
+      if(err){
+        res.status(400).send(err);
+      }
+      updatedUser.password = null
+      var newToken = jwt.encode(updatedUser, process.env.JWT_SECRET)
+      res.cookie("token", newToken)
+      res.send(newToken)
+    })
+  })
+})
+
 module.exports = router;

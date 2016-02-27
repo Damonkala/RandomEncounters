@@ -5,6 +5,7 @@ angular.module('randomEncounter')
 	var cookies = $cookies.get('token');
 	if(cookies){
 		$scope.userInfo = (jwtHelper.decodeToken(cookies))
+		console.log($scope.userInfo);
 		$scope.loggedIn = true;
 	} else {
 		$scope.loggedIn = false;
@@ -35,5 +36,17 @@ angular.module('randomEncounter')
 			}
 			$scope.newPal = possiblePals[Math.floor(Math.random()*possiblePals.length)];
 		})
+	}
+	$scope.submitInterest = function(interest, userId){
+		$scope.interestInput = '';
+		if(!interest){
+			alert("You need to type up an interest first!")
+		} else {
+			UserService.addInterestToSchema(interest, userId)
+			.then(function(res){
+				console.log(res);
+				$scope.userInfo = (jwtHelper.decodeToken(res.data))
+			})
+		}
 	}
 })
