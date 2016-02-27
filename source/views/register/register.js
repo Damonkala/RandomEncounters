@@ -13,7 +13,7 @@ angular.module('randomEncounter')
 		}
 		UserService.register(user)
 		.then(function(data){
-			alert("Welcome to the club!")
+			alert("Welcome to the Random Encounter Club!")
 			$state.go('login');
 		}, function(err){
 			console.log(err);
