@@ -11,7 +11,6 @@ var jwt = require('jwt-simple');
 router.post('/login', function(req, res){
   User.login(req.body, function(err, user){
     if(user){
-      console.log("Do we have an okay user?", user);
       var token = jwt.encode(user, process.env.JWT_SECRET);
       res.send(token)
     } else{
@@ -33,9 +32,7 @@ router.get('/find/:city', function(req, res){
 })
 
 router.get('/find/:city/:interest', function(req, res){
-  console.log("CITY AND INTEREST", req.params.city, req.params.interest);
   User.find({ $and: [ { location: req.params.city }, { interests: req.params.interest } ] }, function(err, users) {
-    console.log("Hey guys!", users);
     res.status(err ? 400 : 200).send(err || users)
   })
 })
@@ -47,22 +44,20 @@ router.put('/alertUser/:sender/:receiver', function(req,res){
 router.put('/addInterest/:interest/:userId', function(req, res){
   Interest.findOne({name: req.params.interest}, function(err, interest){
     if(!interest){
-      console.log("If no interest is present");
       Interest.create({name: req.params.interest, users : req.params.userId}, function(err, interest){
         User.findByIdAndUpdate(req.params.userId, {$push: {interests : interest._id}}, function(err, user){
           var token = jwt.encode(user, process.env.JWT_SECRET);
-          res.send(token)
+          res.cookie(token).send(token);
         })
       })
     } else {
-      console.log("If an interest is present213123123123");
       if(interest.users.indexOf(req.params.userId) == -1){
         console.log("If the interest does not have the user it will be added now");
         interest.users.push(req.params.userId)
         interest.save(function(err, savedInterest){
           User.findByIdAndUpdate(req.params.userId, {$push: {interests : savedInterest._id}}, function(err, user){
             var token = jwt.encode(user, process.env.JWT_SECRET);
-            res.send(token)
+            res.cookie(token).send(token);
           })
         })
       }

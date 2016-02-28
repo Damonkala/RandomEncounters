@@ -21,6 +21,9 @@ app.service('UserService', function($http, ENV, $location, $rootScope, $cookies,
 	this.alertUser = function(userOneUsername, userTwoId){
 		return $http.put(`${ENV.API_URL}/user/alertUser/${userOneUsername}/${userTwoId}`)
 	}
+	this.loadUserPage = function(user){
+		return $http.get(`${ENV.API_URL}/user/userpage`, user)
+	}
 	this.isLoggedIn = function(token){
 		var authentication = {};
 		if(token){
@@ -29,7 +32,8 @@ app.service('UserService', function($http, ENV, $location, $rootScope, $cookies,
 			console.log(authentication, 'cookies authentication');
 			return authentication;
 		}
-		else if($cookies.get('token')){
+		else
+		 if($cookies.get('token')){
 			authentication.userInfo = (jwtHelper.decodeToken($cookies.get('token')));
 			authentication.isAuthed = true;
 			return authentication;
