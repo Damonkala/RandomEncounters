@@ -46,8 +46,12 @@ router.put('/addInterest/:interest/:userId', function(req, res){
     if(!interest){
       Interest.create({name: req.params.interest, users : req.params.userId}, function(err, interest){
         User.findByIdAndUpdate(req.params.userId, {$push: {interests : interest._id}}, function(err, user){
-          var token = jwt.encode(user, process.env.JWT_SECRET);
-          res.cookie(token).send(token);
+          user.password = null;
+          console.log("NEW user?:", user);
+          // res.send(user)
+          User.findById(user._id).populate('interests').exec(function(err, user){
+            res.send(user)
+          })
         })
       })
     } else {
@@ -56,8 +60,12 @@ router.put('/addInterest/:interest/:userId', function(req, res){
         interest.users.push(req.params.userId)
         interest.save(function(err, savedInterest){
           User.findByIdAndUpdate(req.params.userId, {$push: {interests : savedInterest._id}}, function(err, user){
-            var token = jwt.encode(user, process.env.JWT_SECRET);
-            res.cookie(token).send(token);
+            user.password = null;
+            console.log("NEW user?:", user);
+            // res.send(user)
+            User.findById(user._id).populate('interests').exec(function(err, user){
+              res.send(user)
+            })
           })
         })
       }

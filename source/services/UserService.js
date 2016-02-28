@@ -13,12 +13,13 @@ app.service('UserService', function($http, ENV, $location, $rootScope, $cookies,
 		return $http.get(`${ENV.API_URL}/user/find/${city}`)
 	}
 	this.findByCityAndInterest = function(city, interest){
-		return $http.get(`${ENV.API_URL}/user/find/${city}/${interest}`)
+		return $http.get(`${ENV.API_URL}/user/find/${city}/${interest._id}`)
 	}
+	// quarinteen
 	this.addInterestToSchema = function(interest, userId){
-		$cookies.remove('token');
 		return $http.put(`${ENV.API_URL}/user/addInterest/${interest}/${userId}`)
 	}
+	// quarinteen
 	this.alertUser = function(userOneUsername, userTwoId){
 		return $http.put(`${ENV.API_URL}/user/alertUser/${userOneUsername}/${userTwoId}`)
 	}
