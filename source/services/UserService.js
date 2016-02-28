@@ -24,7 +24,6 @@ app.service('UserService', function($http, ENV, $location, $rootScope, $cookies,
 	this.isLoggedIn = function(token){
 		var authentication = {};
 		if(token){
-			console.log(token, 'new token');
 			authentication.userInfo = (jwtHelper.decodeToken($cookies.get('token')));
 			authentication.isAuthed = true;
 			console.log(authentication, 'cookies authentication');
@@ -33,7 +32,6 @@ app.service('UserService', function($http, ENV, $location, $rootScope, $cookies,
 		else if($cookies.get('token')){
 			authentication.userInfo = (jwtHelper.decodeToken($cookies.get('token')));
 			authentication.isAuthed = true;
-			console.log(authentication, 'authentication');
 			return authentication;
 		} else {
 			authentication.userInfo = null;

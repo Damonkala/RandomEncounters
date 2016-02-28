@@ -14,7 +14,7 @@ angular.module('randomEncounter')
 				var token = $cookies.get('token');
 				var decoded = jwtHelper.decodeToken(token);
 				$scope.userInfo = (jwtHelper.decodeToken(token))
-				console.log($scope.userInfo);
+				console.log("IMPORTANT INFO:", $scope.userInfo);
 				$scope.loggedIn = true;
 				$state.go('userpage')
 			}

@@ -46,7 +46,8 @@ userSchema.statics.register = function(user, cb){
 userSchema.statics.login = function(user, cb){
 	var username = user.username;
 	var password = user.password;
-	User.findOne({username: username}, function(err, dbUser){
+	User.findOne({username: username}).populate('interests').exec(function(err, dbUser){
+		console.log("Is our user okay?", dbUser);
 		if(err || !dbUser) return cb(err || 'Incorrect username or password');
 		bcrypt.compare(user.password, dbUser.password, function(err, correct){
 			if(err || !correct) return cb(err || 'Incorrect username or password');
