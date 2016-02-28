@@ -49,7 +49,9 @@ router.put('/addInterest/:interest/:userId', function(req, res){
       console.log("If no interest is present");
       Interest.create({name: req.params.interest, users : req.params.userId}, function(err, interest){
         User.findByIdAndUpdate(req.params.userId, {$push: {interests : interest._id}}, function(err, user){
-          res.send(user);
+          // res.send(user);
+          var token = jwt.encode(user, process.env.JWT_SECRET);
+      res.send(token)
         })
       })
     } else {
@@ -59,7 +61,9 @@ router.put('/addInterest/:interest/:userId', function(req, res){
         interest.users.push(req.params.userId)
         interest.save(function(err, savedInterest){
           User.findByIdAndUpdate(req.params.userId, {$push: {interests : savedInterest._id}}, function(err, user){
-            res.send(user);
+            // res.send(user);
+            var token = jwt.encode(user, process.env.JWT_SECRET);
+      res.send(token)
           })
         })
       }

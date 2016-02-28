@@ -21,16 +21,19 @@ app.service('UserService', function($http, ENV, $location, $rootScope, $cookies,
 	this.alertUser = function(userOneUsername, userTwoId){
 		return $http.put(`${ENV.API_URL}/user/alertUser/${userOneUsername}/${userTwoId}`)
 	}
-	this.isLoggedIn = function(cookies){
+	this.isLoggedIn = function(token){
 		var authentication = {};
-		if(cookies){
+		if(token){
+			console.log(token, 'new token');
 			authentication.userInfo = (jwtHelper.decodeToken($cookies.get('token')));
 			authentication.isAuthed = true;
+			console.log(authentication, 'cookies authentication');
 			return authentication;
 		}
 		else if($cookies.get('token')){
 			authentication.userInfo = (jwtHelper.decodeToken($cookies.get('token')));
 			authentication.isAuthed = true;
+			console.log(authentication, 'authentication');
 			return authentication;
 		} else {
 			authentication.userInfo = null;
