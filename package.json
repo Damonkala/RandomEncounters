@@ -30,7 +30,8 @@
     "jwt-simple": "^0.4.1",
     "mongoose": "^4.2.8",
     "morgan": "^1.6.1",
-    "rimraf": "^2.4.4"
+    "rimraf": "^2.4.4",
+    "stormpath": "^0.17.4"
   },
   "devDependencies": {
     "gulp-bower": "0.0.11"
