@@ -72,6 +72,13 @@ router.put('/addInterest/:interest/:userId', function(req, res){
     }
   })
 })
+router.put('/removeInterest/:interestId/:userId', function(req, res){
+  User.findByIdAndUpdate(req.params.userId, {$pull: {interests: req.params.interestId}}).populate('interests').exec(function(err, user){
+    Interest.findByIdAndUpdate(req.params.interestId, {$pull: {users: req.params.userId}})
+    console.log("We have a ", user);
+    res.send(user)
+  })
+})
 
 module.exports = router;
 // {$push: {users : req.params.userId}}

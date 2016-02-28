@@ -15,11 +15,12 @@ app.service('UserService', function($http, ENV, $location, $rootScope, $cookies,
 	this.findByCityAndInterest = function(city, interest){
 		return $http.get(`${ENV.API_URL}/user/find/${city}/${interest._id}`)
 	}
-	// quarinteen
 	this.addInterestToSchema = function(interest, userId){
 		return $http.put(`${ENV.API_URL}/user/addInterest/${interest}/${userId}`)
 	}
-	// quarinteen
+	this.removeInterestFromSchema = function(interestId, userId){
+		return $http.put(`${ENV.API_URL}/user/removeInterest/${interestId}/${userId}`)
+	}
 	this.alertUser = function(userOneUsername, userTwoId){
 		return $http.put(`${ENV.API_URL}/user/alertUser/${userOneUsername}/${userTwoId}`)
 	}

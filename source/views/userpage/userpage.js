@@ -4,6 +4,7 @@ angular.module('randomEncounter')
 .controller('userpageCtrl', function($scope, $cookies, jwtHelper, $state, UserService, $rootScope){
 
 	$rootScope.authentication = UserService.isLoggedIn();
+	console.log($rootScope.authentication, "BOY HOWDEY");
 	$scope.interests = $rootScope.authentication.userInfo.interests;
 
 	if(!$rootScope.authentication.isAuthed){
@@ -50,5 +51,11 @@ angular.module('randomEncounter')
 				$scope.interests = res.data.interests;
 			})
 		}
+	}
+	$scope.removeInterest = function(interestId, userId){
+		UserService.removeInterestFromSchema(interestId, userId)
+		.then(function(res){
+			$scope.interests = res.data.interests;
+		})
 	}
 })

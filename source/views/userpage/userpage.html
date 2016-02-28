@@ -8,6 +8,7 @@
 		<button ng-click="findByCityAndInterest(authentication.userInfo.location, interest,  authentication.userInfo.username)">
 			Find a fan of {{interest.name}}
 		</button>
+		<button ng-click="removeInterest(interest._id, authentication.userInfo._id)">X</button>
 	</div>
 
 	<div ng-if="authentication.userInfo.alerts.length">
