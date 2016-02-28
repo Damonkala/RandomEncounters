@@ -44,7 +44,10 @@ angular.module('randomEncounter')
 		} else {
 			UserService.addInterestToSchema(interest, userId)
 			.then(function(res){
-				$rootScope.authentication = UserService.isLoggedIn(res.data);
+				// $rootScope.authentication = UserService.isLoggedIn(res.data);
+				console.log('res is: ', res);
+				$rootScope.authentication.userInfo.interests = res.data.interests;
+				console.log('interests array: ', $rootScope.authentication.userInfo.interests); 
 			})
 		}
 	}

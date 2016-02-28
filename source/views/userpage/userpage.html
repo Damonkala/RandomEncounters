@@ -4,6 +4,7 @@
 
 	<input type="text" ng-model="interestInput" placeholder="interest">
 	<button ng-click="submitInterest(interestInput, authentication.userInfo._id)">Add a new interest</button>
+	{{authentication.userInfo}}
 	<div ng-repeat="interest in authentication.userInfo.interests track by $index">
 		<button ng-click="findByCityAndInterest(authentication.userInfo.location, interest,  authentication.userInfo.username)">
 			Find a fan of {{interest}}
