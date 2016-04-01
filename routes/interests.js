@@ -9,7 +9,7 @@ var Interest = require('../models/Interest');
 var jwt = require('jwt-simple');
 
 router.get('/:id', function(req, res){
-  User.findById(req.params.id, 'interests -_id', function(err, user){
+  User.findById(req.params.id, 'interests -_id').populate('interests').exec(function(err, user){
     if(user){
       console.log("We didn't fuck up and got the interests");
       res.send(user)
@@ -54,12 +54,35 @@ router.put('/addInterest/:interest/:userId', function(req, res){
   })
 })
 router.put('/removeInterest/:interestId/:userId', function(req, res){
-  User.findByIdAndUpdate(req.params.userId, {$pull: {interests: req.params.interestId}}).populate('interests').exec(function(err, user){
-    Interest.findByIdAndUpdate(req.params.interestId, {$pull: {users: req.params.userId}})
-    console.log("We have a ", user);
-    res.send(user)
+  Interest.findByIdAndUpdate(req.params.interestId, {$pull: {users: req.params.userId}}, function(err, interest){
+    if(interest){
+      User.findByIdAndUpdate(req.params.userId, {$pull: {interests: interest._id}}).populate('interests').exec(function(err, user){
+        if(user){
+          res.send(user)
+        }
+      })
+    }
   })
 })
 
 module.exports = router;
 // {$push: {users : req.params.userId}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//

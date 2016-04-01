@@ -2,6 +2,7 @@
 
 angular.module('randomEncounter')
 .controller('userpageCtrl', function($scope, $cookies, jwtHelper, $state, UserService, $rootScope, InterestService){
+
 	$rootScope.authentication = UserService.isLoggedIn();
 	if(!$rootScope.authentication.isAuthed){
 		$state.go('login')
@@ -47,20 +48,39 @@ angular.module('randomEncounter')
 			})
 		})
 	}
-	$scope.submitInterest = function(interest, userId){
+	$scope.submitInterest = function(interest){
 		if(!interest){
 			alert("You need to type up an interest first!")
 		} else {
-			InterestService.addInterestToSchema(interest, userId)
+			InterestService.addInterestToSchema(interest, $rootScope.authentication.userInfo._id)
 			.then(function(res){
-				$scope.interests = res.data.interests;
+				$scope.getInterests($rootScope.authentication.userInfo._id);
 			})
 		}
 	}
-	$scope.removeInterest = function(interestId, userId){
-		InterestService.removeInterestFromSchema(interestId, userId)
+	$scope.removeInterest = function(interestId){
+		InterestService.removeInterestFromSchema(interestId, $rootScope.authentication.userInfo._id)
 		.then(function(res){
-			$scope.interests = res.data.interests;
+			$scope.getInterests($rootScope.authentication.userInfo._id);
 		})
 	}
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//

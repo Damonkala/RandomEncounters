@@ -2,13 +2,13 @@
 <div ng-if="authentication.isAuthed">
 	<button ng-if="!newPal" ng-click="findFriendIn(authentication.userInfo.location, authentication.userInfo.username)">Find a new friend in {{authentication.userInfo.location}}</button>
 	<input type="text" ng-model="interestInput" placeholder="interest">
-	<button ng-click="submitInterest(interestInput, authentication.userInfo._id)">Add a new interest</button>
+	<button ng-click="submitInterest(interestInput)">Add a new interest</button>
 
 	<div ng-repeat="interest in interests track by $index">
 		<button ng-click="findByCityAndInterest(authentication.userInfo.location, interest,  authentication.userInfo.username)">
 			Find a fan of {{interest.name}}
 		</button>
-		<button ng-click="removeInterest(interest._id, authentication.userInfo._id)">X</button>
+		<button ng-click="removeInterest(interest._id)">X</button>
 	</div>
 
 	<!-- <div ng-if="authentication.userInfo.alerts.length">
