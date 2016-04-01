@@ -1,15 +1,20 @@
 'use strict';
 
 angular.module('randomEncounter')
-.controller('userpageCtrl', function($scope, $cookies, jwtHelper, $state, UserService, $rootScope){
-
+.controller('userpageCtrl', function($scope, $cookies, jwtHelper, $state, UserService, $rootScope, InterestService){
 	$rootScope.authentication = UserService.isLoggedIn();
-	console.log($rootScope.authentication, "BOY HOWDEY");
-	$scope.interests = $rootScope.authentication.userInfo.interests;
-
 	if(!$rootScope.authentication.isAuthed){
 		$state.go('login')
 	}
+
+	$scope.getInterests = function(currentUserId){
+		InterestService.getInterests(currentUserId)
+		.then(function(res){
+			$scope.interests = res.data.interests
+			console.log("interests", $scope.interests);
+		})
+	}
+	$scope.getInterests($rootScope.authentication.userInfo._id);
 	$scope.findFriendIn = function(location, username){
 		var yourName = username;
 		UserService.findByCity(location, username)
@@ -46,14 +51,14 @@ angular.module('randomEncounter')
 		if(!interest){
 			alert("You need to type up an interest first!")
 		} else {
-			UserService.addInterestToSchema(interest, userId)
+			InterestService.addInterestToSchema(interest, userId)
 			.then(function(res){
 				$scope.interests = res.data.interests;
 			})
 		}
 	}
 	$scope.removeInterest = function(interestId, userId){
-		UserService.removeInterestFromSchema(interestId, userId)
+		InterestService.removeInterestFromSchema(interestId, userId)
 		.then(function(res){
 			$scope.interests = res.data.interests;
 		})

@@ -24,7 +24,8 @@ app.use(express.static('public'));
 app.use(cookieParser())
 
 // ROUTES
-app.use('/user', require('./routes/user'))
+app.use('/users', require('./routes/users'))
+app.use('/interests', require('./routes/interests'))
 
 
 

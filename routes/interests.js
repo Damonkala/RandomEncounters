@@ -8,39 +8,20 @@ var Interest = require('../models/Interest');
 
 var jwt = require('jwt-simple');
 
-router.post('/login', function(req, res){
-  User.login(req.body, function(err, user){
+router.get('/:id', function(req, res){
+  User.findById(req.params.id, 'interests -_id', function(err, user){
     if(user){
-      var token = jwt.encode(user, process.env.JWT_SECRET);
-      res.send(token)
-    } else{
-      res.send('Incorrect Username or Password!')
+      console.log("We didn't fuck up and got the interests");
+      res.send(user)
+    } else if (err) {
+      console.log("I probably fucked up on the select sytax");
+      res.status('404')
+    } else {
+      console.log("I done fucked up completely!");
     }
   })
 })
 
-router.post('/register', function(req, res){
-  User.register(req.body, function(err, user){
-    res.send(user)
-  })
-})
-
-router.get('/find/:city', function(req, res){
-  User.find({'location' : req.params.city}, function(err, users) {
-    res.status(err ? 400 : 200).send(err || users)
-  })
-})
-
-router.get('/find/:city/:interest', function(req, res){
-  User.find({ $and: [ { location: req.params.city }, { interests: req.params.interest } ] }, function(err, users) {
-    res.status(err ? 400 : 200).send(err || users)
-  })
-})
-router.put('/alertUser/:sender/:receiver', function(req,res){
-  User.findByIdAndUpdate(req.params.receiver, {$push: {alerts : req.params.sender}}, function(err, user){
-    res.status(err ? 400 : 200).send(err || user)
-  })
-})
 router.put('/addInterest/:interest/:userId', function(req, res){
   Interest.findOne({name: req.params.interest}, function(err, interest){
     if(!interest){
