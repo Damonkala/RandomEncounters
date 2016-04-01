@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('randomEncounter', ['ui.router', 'angular-jwt', 'ngCookies'])
+var app = angular.module('randomEncounter', ['ui.router', 'angular-jwt', 'ngCookies', 'oitozero.ngSweetAlert'])
 
 app.constant('ENV', {
   // API_URL: 'https://powerful-lake-77730.herokuapp.com/'
