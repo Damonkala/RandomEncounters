@@ -58,15 +58,27 @@ angular.module('randomEncounter')
 			})
 		}
 	}
+	$scope.beginEdit = function(interest){
+		$scope.editInput = interest.name;
+		$scope.editInterest = interest;
+	}
+	$scope.saveEdits = function(interest){
+		console.log(interest);
+		InterestService.editInterest($scope.editInterest._id, interest, $rootScope.authentication.userInfo._id)
+		.then(function(resp){
+			console.log(resp);
+			$scope.getInterests($rootScope.authentication.userInfo._id);
+		})
+	}
 	$scope.removeInterest = function(interestId){
 		swal({
 			title: "Are you sure?",
-			text: "You will not be able to recover this imaginary file!",
+			text: "Would you like to remove this interest?",
 			type: "warning",
 			showCancelButton: true,
 			confirmButtonColor: "#DD6B55",
-			confirmButtonText: "Yes, delete it!",
-			cancelButtonText: "No, cancel plx!",
+			confirmButtonText: "Yep",
+			cancelButtonText: "Nah",
 			closeOnConfirm: false,
 			closeOnCancel: false },
 			function(isConfirm){
@@ -74,28 +86,11 @@ angular.module('randomEncounter')
 					InterestService.removeInterestFromSchema(interestId, $rootScope.authentication.userInfo._id)
 					.then(function(res){
 						$scope.getInterests($rootScope.authentication.userInfo._id);
-						swal("Deleted!", "Your imaginary file has been deleted.", "success");
+						swal("Deleted!", "You have removed the interest.", "success");
 					})
 				} else {
-					swal("Cancelled", "Your imaginary file is safe :)", "error");   } });
+					swal("Cancelled", "You still have the interest", "error");
 				}
-			})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			//
+			});
+		}
+	})

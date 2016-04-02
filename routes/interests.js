@@ -64,7 +64,56 @@ router.put('/removeInterest/:interestId/:userId', function(req, res){
     }
   })
 })
-
+router.put('/editInterest/:oldInterest/:newInterest/:user', function(req, res){
+  Interest.findOne({name: req.params.newInterest}, function(err, newInterest){
+    if(newInterest){
+      var newInterest = newInterest;
+      Interest.findByIdAndUpdate(newInterest._id, {$push: {users: req.params.user}}, function(err, newInterest){
+        if(newInterest){
+          console.log("ADD THIS ONE", newInterest._id);
+          console.log("REMOVE THIS ONE", req.params.oldInterest);
+          Interest.findByIdAndUpdate(req.params.oldInterest, {$pull: {users: req.params.user}}, function(err, oldInterest){
+            if(oldInterest){
+              console.log("All is going as planned.", console.log(oldInterest));
+              User.findByIdAndUpdate(req.params.user, {$pull: {interests: oldInterest._id}}, function(err, user){
+                if(user){
+                  console.log("All is still going as planned");
+                  User.findByIdAndUpdate(user._id, {$push: {interests: newInterest._id}}, function(err, user){
+                    if(user){
+                      console.log("Upd8d user: ", user);
+                      res.send(user);
+                    } else if (err) {
+                      console.log(err);
+                      console.log("SUPER FUCK");
+                    }
+                  })
+                }
+              })
+            }
+          })
+        }
+      })
+    } else{
+      console.log("YOUSER!", req.params.user);
+      Interest.create({name: req.params.newInterest, users : req.params.user}, function(err, interest){
+        console.log("Gate 1: ", interest);
+        if(interest){
+          console.log("YES NOW MOVE ON!");
+          User.findByIdAndUpdate(req.params.user, {$push: {interests: interest._id}}, function(err, user){
+            console.log("Gate 2: ", user);
+            if(err){
+              console.log("ERROR SQUAD!: ", err);
+            }
+            User.findByIdAndUpdate(user._id, {$pull: {interests: req.params.oldInterest}}).populate('interests').exec(function(err, user){
+              console.log("Gate 3: ", user);
+              res.send(user);
+            })
+          })
+        }
+      })
+    }
+  })
+})
 module.exports = router;
 // {$push: {users : req.params.userId}}
 

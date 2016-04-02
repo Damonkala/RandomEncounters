@@ -12,4 +12,7 @@ app.service('InterestService', function($http, ENV, $location, $rootScope, $cook
 	this.removeInterestFromSchema = function(interestId, userId){
 		return $http.put(`/interests/removeInterest/${interestId}/${userId}`)
 	}
+	this.editInterest = function(oldInterest, newInterest, user){
+		return $http.put(`/interests/editInterest/${oldInterest}/${newInterest}/${user}`)
+	}
 })

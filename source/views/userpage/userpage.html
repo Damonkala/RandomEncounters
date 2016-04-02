@@ -3,16 +3,35 @@
 	<button ng-if="!newPal" ng-click="findFriendIn(authentication.userInfo.location, authentication.userInfo.username)">Find a new friend in {{authentication.userInfo.location}}</button>
 	<input type="text" ng-model="interestInput" placeholder="interest">
 	<button ng-click="submitInterest(interestInput)">Add a new interest</button>
-
+<hr>
 	<div ng-repeat="interest in interests track by $index">
-		<button ng-click="findByCityAndInterest(authentication.userInfo.location, interest,  authentication.userInfo.username)">
+		<button ng-click="findByCityAndInterest(authentication.userInfo.location, interest,  authentication.userInfo.username)" class="btn btn-primary">
 			Find a fan of {{interest.name}}
 		</button>
-		<button ng-click="removeInterest(interest._id)">
+		<button ng-click="removeInterest(interest._id)" class="btn btn-danger">
 			<i class="fa fa-trash"></i>
 		</button>
+		<button data-toggle="modal" data-target="#myModal" class="btn btn-info" ng-click="beginEdit(interest)">
+			<i class="fa fa-pencil"></i>
+		</button>
 	</div>
-
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Edit Interest</h4>
+				</div>
+				<div class="modal-body">
+					<input type="text" ng-model="editInput">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="saveEdits(editInput)">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- <div ng-if="authentication.userInfo.alerts.length">
 	You got alerted by:
 	<div  ng-repeat="alert in authentication.userInfo.alerts track by $index">
