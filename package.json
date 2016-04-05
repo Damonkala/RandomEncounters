@@ -30,9 +30,11 @@
     "jwt-simple": "^0.4.1",
     "mongoose": "^4.2.8",
     "morgan": "^1.6.1",
-    "rimraf": "^2.4.4"
+    "rimraf": "^2.4.4",
+    "unirest": "^0.4.2"
   },
   "devDependencies": {
-    "gulp-bower": "0.0.11"
+    "gulp-bower": "0.0.11",
+    "gulp-env": "^0.4.0"
   }
 }

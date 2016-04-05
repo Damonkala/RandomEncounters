@@ -4,11 +4,12 @@ angular.module('randomEncounter')
 .controller('loginCtrl', function($scope, UserService, $cookies, jwtHelper, $state, $rootScope){
 	$rootScope.authentication = UserService.isLoggedIn();
 	$scope.submit = function(user){
+		console.log("Step One, controller: ", user);
 		UserService.login(user)
 		.then(function(res){
 			$scope.$emit('loggedIn');
 			if(res.data === "Incorrect Username or Password!"){
-				alert("Incorrect Username or Password!")
+				swal("Incorrect Username or Password!", "error")
 			} else{
 				document.cookie = 'token' + "=" + res.data;
 				var token = $cookies.get('token');

@@ -7,8 +7,10 @@ var User = require('../models/User');
 
 var jwt = require('jwt-simple');
 
+
 router.post('/login', function(req, res){
   User.login(req.body, function(err, user){
+    console.log("Hello babby!", user);
     if(user){
       var token = jwt.encode(user, process.env.JWT_SECRET);
       res.send(token)
@@ -40,7 +42,11 @@ router.put('/alertUser/:sender/:receiver', function(req,res){
     res.status(err ? 400 : 200).send(err || user)
   })
 })
-
+router.put('/updateLocation/:user/:location', function(req, res){
+  User.findByIdAndUpdate(req.params.user, {$set:{location: req.params.location}}, function(err, user){
+    res.status(err ? 400 : 200).send(err || user)
+  })
+})
 
 module.exports = router;
 // {$push: {users : req.params.userId}}

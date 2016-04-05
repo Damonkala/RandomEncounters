@@ -2,21 +2,22 @@
 
 var app = angular.module('randomEncounter');
 
-app.service('UserService', function($http, ENV, $location, $rootScope, $cookies, jwtHelper){
+app.service('UserService', function($http, $location, $rootScope, $cookies, jwtHelper){
 	this.login = function(user){
-		return $http.post(`/user/login`, user);
+		console.log("Step Two, service: ", user);
+		return $http.post(`/users/login`, user);
 	};
 	this.register = function(user){
-		return $http.post(`/user/register`, user);
+		return $http.post(`/users/register`, user);
 	};
 	this.findByCity = function(city){
-		return $http.get(`/user/find/${city}`)
+		return $http.get(`/users/find/${city}`)
 	}
 	this.findByCityAndInterest = function(city, interest){
-		return $http.get(`/user/find/${city}/${interest._id}`)
+		return $http.get(`/users/find/${city}/${interest._id}`)
 	}
 	this.alertUser = function(userOneUsername, userTwoId){
-		return $http.put(`/user/alertUser/${userOneUsername}/${userTwoId}`)
+		return $http.put(`/users/alertUser/${userOneUsername}/${userTwoId}`)
 	}
 	this.loadUserPage = function(user){
 		return $http.get(`/user/userpage`, user)
@@ -39,5 +40,8 @@ app.service('UserService', function($http, ENV, $location, $rootScope, $cookies,
 			authentication.isAuthed = false;
 			return authentication;
 		}
+	}
+	this.updateLocation = function(userId, location){
+		return $http.put(`/users/updateLocation/${userId}/${location}`)
 	}
 })

@@ -3,6 +3,7 @@
 	<button ng-if="!newPal" ng-click="findFriendIn(authentication.userInfo.location, authentication.userInfo.username)">Find a new friend in {{authentication.userInfo.location}}</button>
 	<input type="text" ng-model="interestInput" placeholder="interest">
 	<button ng-click="submitInterest(interestInput)">Add a new interest</button>
+	<button ng-click="getLocation()">Get Location</button>
 <hr>
 	<div ng-repeat="interest in interests track by $index">
 		<button ng-click="findByCityAndInterest(authentication.userInfo.location, interest,  authentication.userInfo.username)" class="btn btn-primary">
@@ -32,14 +33,4 @@
 			</div>
 		</div>
 	</div>
-	<!-- <div ng-if="authentication.userInfo.alerts.length">
-	You got alerted by:
-	<div  ng-repeat="alert in authentication.userInfo.alerts track by $index">
-	{{alert}}
-</div>
-</div>
-<div ng-if="newPal">
-Your new pal is {{newPal.username}}!
-<button ng-click="findFriendIn(authentication.userInfo.location, authentication.userInfo.username)">Find a new pal</button>
-</div> -->
 </div>

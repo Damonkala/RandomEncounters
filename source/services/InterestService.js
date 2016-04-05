@@ -2,7 +2,7 @@
 
 var app = angular.module('randomEncounter');
 
-app.service('InterestService', function($http, ENV, $location, $rootScope, $cookies, jwtHelper){
+app.service('InterestService', function($http, $location, $rootScope, $cookies, jwtHelper){
 	this.getInterests = function(currentUserId){
 		return $http.get(`interests/${currentUserId}`)
 	}

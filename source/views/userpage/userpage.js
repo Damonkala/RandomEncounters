@@ -1,13 +1,26 @@
 'use strict';
 
 angular.module('randomEncounter')
-.controller('userpageCtrl', function($scope, $cookies, jwtHelper, $state, UserService, $rootScope, InterestService){
+.controller('userpageCtrl', function($scope, $cookies, jwtHelper, $state, UserService, $rootScope, InterestService, geolocation, $http, LocationService){
 
 	$rootScope.authentication = UserService.isLoggedIn();
 	if(!$rootScope.authentication.isAuthed){
 		$state.go('login')
 	}
-
+	$scope.getLocation = function(){
+		geolocation.getLocation().then(function(data){
+			LocationService.coordsToAddress(data.coords.latitude, data.coords.longitude)
+			.then(function(resp){
+				console.log("HAHAHEHEHOOHOO", resp);
+				console.log("HIHIHIHIHIHIHHIIHIHIH", resp.data.results[3].formatted_address);
+				var address = resp.data.results[3].formatted_address
+				UserService.updateLocation($rootScope.authentication.userInfo._id, address)
+				.then(function(resp){
+					swal("Your location has been updated!")
+				})
+			})
+		});
+	}
 	$scope.getInterests = function(currentUserId){
 		InterestService.getInterests(currentUserId)
 		.then(function(res){
@@ -93,4 +106,5 @@ angular.module('randomEncounter')
 				}
 			});
 		}
+
 	})

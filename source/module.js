@@ -1,11 +1,6 @@
 'use strict';
 
-var app = angular.module('randomEncounter', ['ui.router', 'angular-jwt', 'ngCookies', 'oitozero.ngSweetAlert'])
-
-app.constant('ENV', {
-  // API_URL: 'https://powerful-lake-77730.herokuapp.com/'
-  API_URL: 'http://localhost:3000'
-});
+var app = angular.module('randomEncounter', ['ui.router', 'angular-jwt', 'ngCookies', 'oitozero.ngSweetAlert', 'geolocation'])
 
 app.config(function($stateProvider, $urlRouterProvider, $locationProvider){
   $locationProvider.html5Mode(true);

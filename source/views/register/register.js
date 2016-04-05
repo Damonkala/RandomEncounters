@@ -5,16 +5,16 @@ angular.module('randomEncounter')
 	$rootScope.authentication = UserService.isLoggedIn();
 	$scope.submit = function(user){
 		if(user.password !== user.password2){
-			alert("The passwords don't match!")
+			swal("The passwords don't match!", "error")
 			return;
 		}
 		if(!user.email){
-			alert("You didn't put in an email address!")
+			swal("You didn't put in an email address!", "error")
 			return;
 		}
 		UserService.register(user)
 		.then(function(data){
-			alert("Welcome to the Random Encounter Club!")
+			swal("Welcome to the Random Encounter Club!")
 			$state.go('login');
 		}, function(err){
 			console.log(err);

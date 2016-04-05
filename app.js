@@ -26,6 +26,7 @@ app.use(cookieParser())
 // ROUTES
 app.use('/users', require('./routes/users'))
 app.use('/interests', require('./routes/interests'))
+app.use('/locations', require('./routes/locations'))
 
 
 

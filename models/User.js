@@ -22,7 +22,6 @@ userSchema.statics.register = function(user, cb){
 	var username = user.username;
 	var email = user.email;
 	var name = user.name;
-	var city = user.city;
 	bcrypt.genSalt(10, function(err, salt) {
 		bcrypt.hash(user.password, salt, function(err, password) {
 			User.find({$or: [{username: username}, {email: email}] }, function(err, user){
@@ -31,7 +30,6 @@ userSchema.statics.register = function(user, cb){
 				newUser.username = username;
 				newUser.email = email;
 				newUser.name = name;
-				newUser.location = city;
 				newUser.password = password;
 				newUser.save(function(err, savedUser){
 					savedUser.password = null;
@@ -51,7 +49,7 @@ userSchema.statics.login = function(user, cb){
 		bcrypt.compare(user.password, dbUser.password, function(err, correct){
 			if(err || !correct) return cb(err || 'Incorrect username or password');
 			dbUser.password = null;
-			dbUser.avatar = null
+			console.log("We're going somewhere, who knows where", dbUser);
 			cb(null, dbUser);
 		})
 	})
